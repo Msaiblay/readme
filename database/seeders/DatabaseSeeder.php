@@ -14,6 +14,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 //        $this->call(TownshipSeeder::class);
-        $this->call(ShippingSeeder::class);
+//        $this->call(ShippingSeeder::class);
+//        $this->call(LanguageSeeder::class);
     }
 }

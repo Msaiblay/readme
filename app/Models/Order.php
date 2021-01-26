@@ -11,4 +11,17 @@ class Order extends Model
     use HasFactory;
     use SoftDeletes;
     protected $fillable =['voucherno','totalamount','totalbook','orderdate','deliveryaddress','status','shipping_id','user_id'];
+
+
+    public function shipping(){
+        return $this->belongsTo('App\Models\Shipping');
+    }
+
+    public function user(){
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function book(){
+        return $this->belongsToMany('App\Models\Book','book_order','book_id','order_id')->withPivot('qty');
+    }
 }

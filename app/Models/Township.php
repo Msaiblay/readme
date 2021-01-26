@@ -11,4 +11,8 @@ class Township extends Model
     use HasFactory;
     use SoftDeletes;
     protected $fillable =['name'];
+
+    public function shipping(){
+        return $this->hasOne('App\Models\Shipping');
+    }
 }

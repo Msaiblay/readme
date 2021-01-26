@@ -12,4 +12,13 @@ class Shipping extends Model
     use SoftDeletes;
     protected $fillable =['fee','township_id'];
 
+    public function township(){
+        return $this->belongsTo('App\Models\Township');
+    }
+
+
+    public function order(){
+        return $this->hasOne('App\Models\Order');
+    }
+
 }
