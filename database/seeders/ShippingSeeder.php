@@ -17,12 +17,9 @@ class ShippingSeeder extends Seeder
     public function run()
     {
         $now = Carbon::now();
-        $fees = array(2000,2500,3000,4000,5000);
-        $faker = \Faker\Factory::create();
-        for($i =1;$i<=46;$i++){
-            DB::table('shippings')->insert([
-               'fee' => $fees[$faker->numberBetween(0,4)],
-               'township_id' => $i,
+        for($i =0;$i<=1;$i++){
+            DB::table('languages')->insert([
+//                'name' => $language[$i],
                 'created_at' => $now,
                 'updated_at' => $now
             ]);

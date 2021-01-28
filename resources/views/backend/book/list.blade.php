@@ -2,7 +2,7 @@
     <div class="content">
         <div class="page-inner">
             <div class="page-header">
-                <h4 class="page-title"> Genre </h4>
+                <h4 class="page-title"> Book </h4>
                 <ul class="breadcrumbs">
                     <li class="nav-home">
                         <a href="#" class="text-decoration-none">
@@ -13,7 +13,7 @@
                         <i class="icofont-rounded-right"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="text-decoration-none">Genre</a>
+                        <a href="#" class="text-decoration-none">Book</a>
                     </li>
                     <li class="separator">
                         <i class="icofont-rounded-right"></i>
@@ -29,18 +29,19 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center">
-                                <h4 class="card-title"> Genre List </h4>
+                                <h4 class="card-title"> List </h4>
 
-                                <a class="btn btn-primary btn-round ms-auto" href="{{route('genre.create')}}">
+                                <a class="btn btn-primary btn-round ms-auto" href="{{ route('book.create') }}">
                                     <i class='bx bx-plus' ></i>
                                     Add New
                                 </a>
                             </div>
                         </div>
                         <div class="card-body">
-                            @if(session('successMsg') !=NULL)
+                            @if(session('successMsg') != NULL )
                                 <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    <strong> 	&#10004 Success</strong> {!! session('successMsg') !!}
+                                    <strong> ￼ SUCCESS!</strong>
+                                    {{ session('successMsg') }}
                                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                 </div>
                             @endif
@@ -50,31 +51,40 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Name</th>
-                                        <th style="width: 200px">Action</th>
+                                        <th> Title </th>
+                                        <th> Author </th>
+                                        <th> Genre </th>
+                                        <th style="width: 300px">Action</th>
                                     </tr>
                                     </thead>
                                     <tfoot>
                                     <tr>
                                         <th>#</th>
-                                        <th>Name</th>
+                                        <th> Title </th>
+                                        <th> Author </th>
+                                        <th> Genre </th>
                                         <th>Action</th>
                                     </tr>
                                     </tfoot>
-                                    <tbody>
                                     @php $i =1; @endphp
-                                    @foreach($genres as $genre)
-                                        @php
-                                            $id = $genre->id;
-                                            $name = $genre->name;
-                                        @endphp
+                                    @foreach($books as $book)
                                         <tr>
                                             <td>{{$i++}}</td>
-                                            <td>{{$name}}</td>
+                                            <td>{{$book->title}}<small>{{$book->mmtitle}}</small></td>
+                                            <td>{{$book->author->name}}</td>
                                             <td>
-                                                <a href="{{ route('genre.edit',$id) }}" class="btn btn-warning"><i class="icofont-ui-settings"></i>Edit</a>
+{{--                                                {{ dd($book->geners) }}--}}
+                                                @foreach($book->genres as $gener)
+                                                    <span class="badge rounded-pill bg-secondary">
+                                                        {{$gener->name}}
+                                                    </span>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('book.edit',$book->id) }}" class="btn btn-info"><i class="icofont-info-circle"></i>Detail</a>
+                                                <a href="{{ route('book.edit',$book->id) }}" class="btn btn-warning"><i class="icofont-ui-settings"></i>Edit</a>
 
-                                                <form class="d-inline-block" action="{{route('genre.destroy',$id)}}" method="post" onsubmit="return confirm('Are You Sure to delete ?')">
+                                                <form class="d-inline-block" action="{{route('book.destroy',$book->id)}}" method="post" onsubmit="return confirm('Are You Sure to delete ?')">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button class="btn btn-outline-danger">
@@ -87,8 +97,8 @@
                                                 </form>
                                             </td>
                                         </tr>
-                                    @endforeach
-                                    </tbody>
+                                        @endforeach
+                                        </tbody>
                                 </table>
                             </div>
                         </div>
@@ -97,4 +107,6 @@
             </div>
         </div>
     </div>
+
 </x-backend>
+

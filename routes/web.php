@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\BookController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\GenreContraoller;
+use App\Http\Controllers\LanguageController;
+use App\Http\Controllers\TownshipController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,3 +33,6 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::resource('/genre',GenreContraoller::class);
+Route::resource('/language',LanguageController::class);
+Route::resource('/township',TownshipController::class);
+Route::resource('/book',BookController::class);

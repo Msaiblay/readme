@@ -16,10 +16,11 @@ class LanguageSeeder extends Seeder
     public function run()
     {
         $now = Carbon::now();
-        $language = array('Myanmar','English');
-        for($i =0;$i<=1;$i++){
-            DB::table('languages')->insert([
-                'name' => $language[$i],
+        $languages = array('Myanmar', 'English');
+
+        foreach ($languages as $language) {
+            DB::table('language')->insert([
+                'name' => $language,
                 'created_at' => $now,
                 'updated_at' => $now
             ]);

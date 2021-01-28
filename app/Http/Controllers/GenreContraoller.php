@@ -2,40 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Genre;
 use Illuminate\Http\Request;
 
 class GenreContraoller extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
 //        echo "msai";
-        return view('backend.genre.list');
+        $genres = Genre::all();
+
+        return view('backend.genre.list',compact('genres'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        //
+        return view('backend.genre.new');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $validator = $request->validate([
+           'name' => ['required','min:3','max:100','unique:genres']
+        ]);
+        $genre = new Genre();
+        $genre->name = $request->name;
+        $genre->save();
+        return redirect()->route('genre.index')->with('successMsg',"New Genre <strong>($request->name)</strong> is Added in your Data.");
+
+
     }
 
     /**
@@ -46,7 +42,6 @@ class GenreContraoller extends Controller
      */
     public function show($id)
     {
-        //
     }
 
     /**
@@ -57,8 +52,12 @@ class GenreContraoller extends Controller
      */
     public function edit($id)
     {
-        //
+//        dd($id);
+        $genre = Genre::find($id);
+
+        return view('backend.genre.edit',compact('genre'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -69,7 +68,16 @@ class GenreContraoller extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+//        dd($id);
+        $name = $request->name;
+        $data = [
+            'name'=>$name
+        ];
+        Genre::where('id',$id)->update($data);
+
+        $oldname=$request->oldname;
+        return redirect()->route('genre.index')->with('successMsg',"Existing Genre <strong>($oldname)</strong> is updated as <strong>($request->name)</strong> in your Data.");
+
     }
 
     /**
@@ -80,6 +88,10 @@ class GenreContraoller extends Controller
      */
     public function destroy($id)
     {
-        //
+//        dd($id);
+        $genre = Genre::find($id);
+        $genre->delete();
+        return redirect()->route('genre.index')->with('successMsg',"Existing Genre <strong>({$genre->name})</strong> is Deleted as from your Data.");
+
     }
 }
